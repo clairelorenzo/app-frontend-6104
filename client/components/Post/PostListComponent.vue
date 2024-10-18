@@ -6,6 +6,8 @@ import { useUserStore } from "@/stores/user";
 import { fetchy } from "@/utils/fetchy";
 import { storeToRefs } from "pinia";
 import { onBeforeMount, ref } from "vue";
+import CommentListComponent from "../Comment/CommentListComponent.vue";
+import CreateCommentForm from "../Comment/CreateCommentForm.vue";
 import SearchPostForm from "./SearchPostForm.vue";
 
 const { isLoggedIn } = storeToRefs(useUserStore());
@@ -25,6 +27,18 @@ async function getPosts(author?: string) {
   }
   searchAuthor.value = author ? author : "";
   posts.value = postResults;
+}
+
+const comments = ref<Array<Record<string,string>>>([]);
+
+async function loadComments(postId: string) {
+  let commentResults;
+  try {
+    commentResults = await fetchy("/api/comments/", "GET", {body: {postId:postId}});
+  } catch (_) {
+    return;
+  }
+  comments.value = commentResults;
 }
 
 function updateEditing(id: string) {
@@ -49,8 +63,10 @@ onBeforeMount(async () => {
   </div>
   <section class="posts" v-if="loaded && posts.length !== 0">
     <article v-for="post in posts" :key="post._id">
-      <PostComponent v-if="editing !== post._id" :post="post" @refreshPosts="getPosts" @editPost="updateEditing" />
+      <PostComponent v-if="editing !== post._id" :post="post" @refreshPosts="getPosts" @editPost="updateEditing" showComments/>
       <EditPostForm v-else :post="post" @refreshPosts="getPosts" @editPost="updateEditing" />
+      <CommentListComponent :postId="post._id" />
+      <CreateCommentForm :postId="post._id" @refresh-comments="loadComments" />
     </article>
   </section>
   <p v-else-if="loaded">No posts found</p>

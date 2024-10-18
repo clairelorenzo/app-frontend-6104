@@ -1,6 +1,9 @@
 import { Authing } from "./app";
+import { CommentDoc } from "./concepts/commenting";
 import { AlreadyFriendsError, FriendNotFoundError, FriendRequestAlreadyExistsError, FriendRequestDoc, FriendRequestNotFoundError } from "./concepts/friending";
+import { GoalDoc } from "./concepts/goal_setting";
 import { PostAuthorNotMatchError, PostDoc } from "./concepts/posting";
+import { EventDoc } from "./concepts/scheduling";
 import { Router } from "./framework/router";
 
 /**
@@ -27,6 +30,22 @@ export default class Responses {
     return posts.map((post, i) => ({ ...post, author: authors[i] }));
   }
 
+  static async comment(comment: CommentDoc | null) {
+    if (!comment) {
+      return comment;
+    }
+    const author = await Authing.getUserById(comment.author);
+    return { ...comment, author: author.username };
+  }
+
+  /**
+   * Same as {@link comment} but for an array of CommentDoc for improved performance.
+   */
+  static async comments(comments: CommentDoc[]) {
+    const authors = await Authing.idsToUsernames(comments.map((comment) => comment.author));
+    return comments.map((comment, i) => ({ ...comment, author: authors[i] }));
+  }
+
   /**
    * Convert FriendRequestDoc into more readable format for the frontend
    * by converting the ids into usernames.
@@ -36,6 +55,33 @@ export default class Responses {
     const to = requests.map((request) => request.to);
     const usernames = await Authing.idsToUsernames(from.concat(to));
     return requests.map((request, i) => ({ ...request, from: usernames[i], to: usernames[i + requests.length] }));
+  }
+
+  static async event(event: EventDoc | null) {
+    if (!event) {
+      return event;
+    }
+    const user = await Authing.getUserById(event.user);
+    return { ...event, user: user.username };
+  }
+  static async goal(goal: GoalDoc | null) {
+    if (!goal) {
+      return goal;
+    }
+    const author = await Authing.getUserById(goal.author);
+    return { ...goal, author: author.username };
+  }
+  static async goals(goals: GoalDoc[]) {
+    const authors = await Authing.idsToUsernames(goals.map((goal) => goal.author));
+    return goals.map((goal, i) => ({ ...goal, author: authors[i] }));
+  }
+
+  /**
+   * Same as {@link event} but for an array of EventDoc for improved performance.
+   */
+  static async events(events: EventDoc[]) {
+    const users = await Authing.idsToUsernames(events.map((event) => event.user));
+    return events.map((event, i) => ({ ...event, user: users[i] }));
   }
 }
 

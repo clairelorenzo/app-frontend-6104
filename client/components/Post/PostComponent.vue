@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import CommentListComponent from "@/components/Comment/CommentListComponent.vue";
 import { useUserStore } from "@/stores/user";
 import { formatDate } from "@/utils/formatDate";
 import { storeToRefs } from "pinia";
 import { fetchy } from "../../utils/fetchy";
 
-const props = defineProps(["post"]);
+const props = defineProps(["post", "showComments"]);
 const emit = defineEmits(["editPost", "refreshPosts"]);
 const { currentUsername } = storeToRefs(useUserStore());
 
@@ -31,6 +32,7 @@ const deletePost = async () => {
       <p v-else>Created on: {{ formatDate(props.post.dateCreated) }}</p>
     </article>
   </div>
+  <CommentListComponent v-if="props.showComments" :postId="props.post._id" />
 </template>
 
 <style scoped>
