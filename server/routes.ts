@@ -156,6 +156,7 @@ class Routes {
     return await Friending.rejectRequest(fromOid, user);
   }
   @Router.get("/comments")
+  @Router.validate(z.object({ postId: z.string().optional() }))
   async getComments(postId: string) {
     console.log(postId);
     const postObjectId = new ObjectId(postId);
@@ -190,6 +191,7 @@ class Routes {
   }
 
   @Router.get("/events")
+  @Router.validate(z.object({ author: z.string().optional() }))
   async getEvents(author: string) {
     let authorEvents;
     const id = (await Authing.getUserByUsername(author))._id;
@@ -200,6 +202,11 @@ class Routes {
   @Router.post("/events")
   async createEvent(session: SessionDoc, name: string, startTime: string, endTime: string, type: "focus" | "social") {
     const user = Sessioning.getUser(session);
+    if (!Date.parse(startTime) || !Date.parse(endTime)) {
+      console.log("here");
+      throw new Error("Invalid date format for startTime or endTime");
+    }
+    console.log("everything fine up to here");
     const created = await Scheduling.create(user, name, startTime, endTime, { type });
     return { msg: created.msg, event: await Responses.event(created.event) };
   }
@@ -224,6 +231,7 @@ class Routes {
 
   // GOALS
   @Router.get("/goals")
+  @Router.validate(z.object({ author: z.string().optional() }))
   async getGoals(session: SessionDoc) {
     const user = Sessioning.getUser(session);
     const goals = await GoalSetting.getByAuthor(user);

@@ -48,4 +48,24 @@ textarea {
   border-radius: 4px;
   resize: none;
 }
+button {
+  font-size: 1em;
+  padding: 0.75em 1em;
+  color: white;
+  background:#7a3b99;
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #d1a5e7; /* Darker purple on hover */
+}
+
+button:active {
+  background: #4b2e67; /* Deep purple when clicked */
+}
 </style>
+
+

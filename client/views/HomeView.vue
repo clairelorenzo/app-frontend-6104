@@ -41,7 +41,45 @@ onBeforeMount(loadPosts);
 </template>
 
 <style scoped>
+/* Background and primary colors */
+body, main {
+  background-color: #f3e8fd; /* Light lavender background */
+  color: #4a2c6e; /* Calming purple for text */
+  font-family: 'Arial', sans-serif;
+  padding: 2em;
+}
+
+/* Header styling */
 h1, h2 {
   text-align: center;
+  color: #4a2c6e;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+/* General layout for sections */
+section {
+  max-width: 800px;
+  margin: 1em auto;
+  padding: 1.5em;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Button styling */
+button {
+  background-color: #b385d2; /* Calming purple button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #8e65b7; /* Darker purple on hover */
 }
 </style>
+

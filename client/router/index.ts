@@ -2,9 +2,12 @@ import { storeToRefs } from "pinia";
 import { createRouter, createWebHistory } from "vue-router";
 
 import { useUserStore } from "@/stores/user";
+import CalendarView from "../views/CalendarView.vue";
+import GoalsView from "../views/GoalsView.vue";
 import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
+import ProfileView from "../views/ProfileView.vue";
 import SettingView from "../views/SettingView.vue";
 
 const router = createRouter({
@@ -14,6 +17,21 @@ const router = createRouter({
       path: "/",
       name: "Home",
       component: HomeView,
+    },
+    {
+      path: "/profile",
+      name: "My Profile",
+      component: ProfileView,
+    },
+    {
+      path: "/calendar",
+      name: "Calendar",
+      component: CalendarView,
+    },
+    {
+      path: "/goals",
+      name: "Goals",
+      component: GoalsView,
     },
     {
       path: "/setting",

@@ -39,6 +39,7 @@ async function loadComments(postId: string) {
     return;
   }
   comments.value = commentResults;
+  
 }
 
 function updateEditing(id: string) {
@@ -63,7 +64,7 @@ onBeforeMount(async () => {
   </div>
   <section class="posts" v-if="loaded && posts.length !== 0">
     <article v-for="post in posts" :key="post._id">
-      <PostComponent v-if="editing !== post._id" :post="post" @refreshPosts="getPosts" @editPost="updateEditing" showComments/>
+      <PostComponent class="post-container" v-if="editing !== post._id" :post="post" @refreshPosts="getPosts" @editPost="updateEditing" showComments/>
       <EditPostForm v-else :post="post" @refreshPosts="getPosts" @editPost="updateEditing" />
       <CommentListComponent :postId="post._id" />
       <CreateCommentForm :postId="post._id" @refresh-comments="loadComments" />
@@ -106,4 +107,26 @@ article {
   margin: 0 auto;
   max-width: 60em;
 }
+
+/* Post styling */
+.post-container {
+  background-color: #e8d3f7; /* Softer purple for post backgrounds */
+  padding: 1em;
+  margin: 0.5em 0;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.08);
+  font-size: 0.95em;
+  color: #3d1a52;
+}
+
+/* Comment styling */
+.comment-container {
+  background-color: #f7f2fc; /* Lightest purple for comments */
+  padding: 0.5em;
+  margin: 0.3em 0;
+  border-radius: 5px;
+  font-size: 0.85em;
+  color: #3d1a52;
+}
+
 </style>
