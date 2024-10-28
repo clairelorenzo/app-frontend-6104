@@ -1,8 +1,10 @@
 import { storeToRefs } from "pinia";
 import { createRouter, createWebHistory } from "vue-router";
 
+import { useSettingsStore } from "@/stores/settings"; // Import settings store to check focus mode
 import { useUserStore } from "@/stores/user";
 import CalendarView from "../views/CalendarView.vue";
+import FocusModeView from "../views/FocusModeView.vue"; // Page to show when focus mode is active
 import GoalsView from "../views/GoalsView.vue";
 import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
@@ -52,6 +54,11 @@ const router = createRouter({
       },
     },
     {
+      path: "/focus-mode",
+      name: "FocusMode",
+      component: FocusModeView,
+    },
+    {
       path: "/:catchAll(.*)",
       name: "not-found",
       component: NotFoundView,
@@ -60,13 +67,21 @@ const router = createRouter({
 });
 
 /**
- * Navigation guards to prevent user from accessing wrong pages.
+ * Navigation guards to prevent unauthorized access during focus mode.
  */
 router.beforeEach((to, from) => {
   const { isLoggedIn } = storeToRefs(useUserStore());
+  const settingsStore = useSettingsStore(); // Access settings store directly to use actions and state
+  const { isFocusMode } = storeToRefs(settingsStore);
 
+  // Check if authentication is required and user is logged in
   if (to.meta.requiresAuth && !isLoggedIn.value) {
     return { name: "Login" };
+  }
+
+  // Restrict all routes except the settings page when focus mode is active
+  if (isFocusMode.value && to.name !== "Settings" && to.name !== "FocusMode") {
+    return { name: "FocusMode" }; // Redirect to focus mode message page
   }
 });
 

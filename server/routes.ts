@@ -232,15 +232,20 @@ class Routes {
   // GOALS
   @Router.get("/goals")
   @Router.validate(z.object({ author: z.string().optional() }))
-  async getGoals(session: SessionDoc) {
-    const user = Sessioning.getUser(session);
-    const goals = await GoalSetting.getByAuthor(user);
+  async getGoals(author: string) {
+    let goals;
+    if (author) {
+      const id = (await Authing.getUserByUsername(author))._id;
+      goals = await GoalSetting.getByAuthor(id);
+    } else {
+      goals = await GoalSetting.getGoals();
+    }
     return Responses.goals(goals);
   }
   @Router.post("/goals")
   async createGoal(session: SessionDoc, content: string, options?: GoalOptions) {
     const user = Sessioning.getUser(session);
-    const created = await GoalSetting.create(user, content);
+    const created = await GoalSetting.create(user, content, options);
     return { msg: created.msg, goal: await Responses.goal(created.goal) };
   }
   @Router.delete("/goals/:id")

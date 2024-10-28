@@ -3,7 +3,7 @@ import { useUserStore } from "@/stores/user";
 import { fetchy } from "@/utils/fetchy";
 import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
-
+import CreateGoalForm from "../components/Goal/CreateGoalForm.vue";
 const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 const posts = ref<Array<Record<string, any>>>([]);
 const goals = ref<Array<Record<string, any>>>([]);
@@ -11,18 +11,15 @@ const otherGoals = ref<Array<Record<string, any>>>([]);
 
 // Load user's posts and goals on component mount
 async function loadUserGoals() {
-  if (!currentUsername.value) return;
-
   try {
     // Fetch goals
     const goalsResponse = await fetchy(`/api/goals`, "GET", { query: { author: currentUsername.value } });
-    goals.value = goalsResponse || [];
+    goals.value = goalsResponse;
   } catch (error) {
     console.error("Failed to load goals:", error);
   }
 }
 async function loadOtherUserGoals() {
-  if (!currentUsername.value) return;
 
   try {
     // Fetch goals
@@ -34,6 +31,7 @@ async function loadOtherUserGoals() {
 }
 
 onMounted(loadUserGoals);
+onMounted(loadOtherUserGoals);
 </script>
 
 <template>
@@ -44,21 +42,23 @@ onMounted(loadUserGoals);
       <h2>My Goals</h2>
       <ul v-if="goals.length">
         <li v-for="goal in goals" :key="goal._id" class="goal-item">
-          <p><strong>{{ goal.title }}</strong></p>
-          <p>{{ goal.description }}</p>
+          <p>Author:{{ goal.author}}</p>
+          <p><strong>{{ goal.content }}</strong></p>
           <p>Status: {{ goal.options.completed ? "Completed" : "In Progress" }}</p>
     
         </li>
       </ul>
       <p v-else>No goals set yet.</p>
     </section>
+    <CreateGoalForm @refreshPosts="loadUserGoals" />
     <section class="goals-section">
       <h2>Friends' Goals</h2>
       <ul v-if="otherGoals.length">
         <li v-for="goal in otherGoals" :key="goal._id" class="goal-item">
-          <p><strong>{{ goal.title }}</strong></p>
-          <p>{{ goal.description }}</p>
-          <p>Status: {{ goal.options.completed ? "Completed" : "In Progress" }}</p>
+          <ul v-if="goal.author != currentUsername">
+            <p><strong>{{ goal.content }}</strong></p>
+            <p>Status: {{ goal.options.completed ? "Completed" : "In Progress" }}</p>
+        </ul>
         </li>
       </ul>
       <p v-else>You're up to date on your friends' goals!</p>

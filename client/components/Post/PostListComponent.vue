@@ -110,7 +110,7 @@ article {
 
 /* Post styling */
 .post-container {
-  background-color: #e8d3f7; /* Softer purple for post backgrounds */
+  background-color: #f3e8fd; /* Light lavender background */
   padding: 1em;
   margin: 0.5em 0;
   border-radius: 8px;
@@ -126,6 +126,7 @@ article {
   margin: 0.3em 0;
   border-radius: 5px;
   font-size: 0.85em;
+  font: Georgia;
   color: #3d1a52;
 }
 

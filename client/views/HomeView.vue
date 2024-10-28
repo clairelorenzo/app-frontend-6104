@@ -41,10 +41,10 @@ onBeforeMount(loadPosts);
 </template>
 
 <style scoped>
-/* Background and primary colors */
+
 body, main {
-  background-color: #f3e8fd; /* Light lavender background */
-  color: #4a2c6e; /* Calming purple for text */
+  background-color: #f3e8fd; 
+  color: #4a2c6e;
   font-family: 'Arial', sans-serif;
   padding: 2em;
 }
@@ -59,6 +59,7 @@ h1, h2 {
 
 /* General layout for sections */
 section {
+  background-color: #f3e8fd; /* Light lavender background */
   max-width: 800px;
   margin: 1em auto;
   padding: 1.5em;
