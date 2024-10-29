@@ -89,7 +89,7 @@ p,
 }
 
 article {
-  background-color: var(--base-bg);
+  background-color: #fdf3e4;
   border-radius: 1em;
   display: flex;
   flex-direction: column;
@@ -110,7 +110,7 @@ article {
 
 /* Post styling */
 .post-container {
-  background-color: #f3e8fd; /* Light lavender background */
+  background-color: #f3e8fd;
   padding: 1em;
   margin: 0.5em 0;
   border-radius: 8px;
@@ -121,7 +121,7 @@ article {
 
 /* Comment styling */
 .comment-container {
-  background-color: #f7f2fc; /* Lightest purple for comments */
+  /* background-color: #f7f2fc;  */
   padding: 0.5em;
   margin: 0.3em 0;
   border-radius: 5px;

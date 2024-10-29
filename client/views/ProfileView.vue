@@ -30,7 +30,7 @@ onMounted(loadProfileData);
 
 <template>
   <main v-if="isLoggedIn">
-    <h1>{{ currentUsername }}'s Profile</h1>
+    <h1>{{ currentUsername }}'s profile</h1>
 
     <!-- User's Posts Section -->
     <section class="profile-section">
@@ -66,37 +66,66 @@ onMounted(loadProfileData);
 </template>
 
 <style scoped>
+/* General page background */
+main {
+  background-color: #f3e8ff; /* light purple */
+  padding: 2em;
+  font-family: Arial, sans-serif;
+  color: #4b2e67; /* deep purple */
+}
+
+/* Centering titles and adding padding */
 h1, h2 {
   text-align: center;
+  font-weight: bold;
+  color: #7a3b99; /* slightly darker purple */
+  margin-bottom: 1em;
 }
 
+/* Section styling for consistent spacing */
 .profile-section {
-  margin: 2em 0;
-  padding: 1em;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  background-color: #fdf3e4;
+  margin: 2em auto;
+  padding: 1.5em;
+  border-radius: 12px;
+  border: 1px solid #d1a5e7; /* light border for contrast */
   max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* List styling */
 ul {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 .post-item, .goal-item {
   padding: 0.5em 0;
   border-bottom: 1px solid #eee;
+  transition: background 0.3s ease;
 }
 
+/* Add hover effect to make items interactive */
+.post-item:hover, .goal-item:hover {
+  background-color: #efe2fc; /* subtle purple hover effect */
+}
+
+/* Styling for the last list item */
 .post-item:last-child, .goal-item:last-child {
   border-bottom: none;
 }
 
+/* Timestamp styling for subtle display */
 .post-timestamp {
-  font-size: 0.8em;
-  color: #666;
+  font-size: 0.85em;
+  color: #7a3b99;
 }
 
+/* Responsive styling for mobile screens */
+@media (max-width: 600px) {
+  .profile-section {
+    padding: 1em;
+  }
+}
 </style>

@@ -73,7 +73,7 @@ onBeforeMount(async () => {
 /* Navbar styles */
 nav {
   padding: 0.5em 1.5em; /* Make navbar narrower */
-  background-color: #f9f9f9; /* Off-white background */
+  background-color: #fdf3e4; /* Off-white background */
   display: flex;
   align-items: center;
   border-bottom: 1px solid #ddd;

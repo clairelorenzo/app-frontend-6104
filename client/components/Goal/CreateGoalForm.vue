@@ -39,8 +39,11 @@ const emptyForm = () => {
 
 
 <style scoped>
+template {
+  background-color: #fdf3e4;
+}
 form {
-  background-color: var(--base-bg);
+  background-color: #fdf3e4;
   border-radius: 1em;
   display: flex;
   flex-direction: column;

@@ -19,7 +19,7 @@
       <option value="focus">Focus</option>
       <option value="social">Social</option>
     </select>
-    <h5> Select a Date Here!</h5>
+    <h4> Select a Date Here!</h4>
     <!-- Calendar -->
     <div class="month">
       <ul>
@@ -144,7 +144,11 @@ form {
   padding: 1.5em;
   box-shadow: 0 4px 8px rgba(150, 100, 190, 0.2);
 }
-
+h1, h2, h3, h4 {
+  text-align: center;
+  color: #7a3b99; /* darker purple for headings */
+  font-weight: bold;
+}
 input, select {
   font-family: inherit;
   font-size: 1em;
@@ -207,19 +211,19 @@ button:active {
 .weekdays {
   margin: 0;
   padding: 10px 0;
-  background-color: #ddd;
+  background-color: #fdf3e4;
 }
 
 .weekdays li {
   display: inline-block;
   width: 13.6%;
-  color: #666;
+  color: #2a0449;
   text-align: center;
 }
 
 .days {
   padding: 10px 0;
-  background: #eee;
+  background: #fbf7f0;
   margin: 0;
 }
 
@@ -229,7 +233,7 @@ button:active {
   text-align: center;
   margin-bottom: 5px;
   font-size: 12px;
-  color: #777;
+  color: #2a0449;
   cursor: pointer;
 }
 

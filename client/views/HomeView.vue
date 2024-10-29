@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import PostListComponent from "@/components/Post/PostListComponent.vue";
 import { useUserStore } from "@/stores/user";
@@ -10,7 +9,6 @@ const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 
 // Define the posts array
 let posts = ref<Array<Record<string, string>>>([]);
-
 
 // Fetch posts on component mount
 async function loadPosts() {
@@ -34,23 +32,25 @@ onBeforeMount(loadPosts);
     </section>
     <section v-if="isLoggedIn">
       <h2>Posts</h2>
-      <PostListComponent :posts="posts" />
+      <div class="post-list">
+        <PostListComponent :posts="posts" />
+      </div>
     </section>
-  
   </main>
 </template>
 
 <style scoped>
-
-body, main {
-  background-color: #f3e8fd; 
+body,
+main {
+  background-color: #f3e8ff; 
   color: #4a2c6e;
   font-family: 'Arial', sans-serif;
   padding: 2em;
 }
 
 /* Header styling */
-h1, h2 {
+h1,
+h2 {
   text-align: center;
   color: #4a2c6e;
   font-weight: bold;
@@ -59,13 +59,17 @@ h1, h2 {
 
 /* General layout for sections */
 section {
-  background-color: #f3e8fd; 
   max-width: 800px;
   margin: 1em auto;
   padding: 1.5em;
-  background-color: #fff;
+}
+
+/* Post list styling */
+.post-list {
+  background-color: #fdf3e4; /* Soft pastel yellow for post list */
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 1em; /* Added padding for a neat look */
 }
 
 /* Button styling */
@@ -83,4 +87,3 @@ button:hover {
   background-color: #8e65b7; /* Darker purple on hover */
 }
 </style>
-

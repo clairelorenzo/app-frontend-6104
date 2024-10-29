@@ -6,7 +6,7 @@ const comments = ref<Array<Record<string,string>>>([]);
 
 const loadComments = async () => {
   try {
-    comments.value = await fetchy(`/api/comments/`, "GET", {query:{postId: props.postId}});
+    comments.value = await fetchy(`/api/comments/`, "GET", { query: { postId: props.postId } });
   } catch (e) {
     console.error("Error loading comments", e);
   }
@@ -16,7 +16,7 @@ onBeforeMount(loadComments);
 </script>
 
 <template>
-  <section>
+  <section class="comments-section">
     <h3>Comments</h3>
     <div v-if="comments.length">
       <article v-for="comment in comments" :key="comment._id">
@@ -28,26 +28,15 @@ onBeforeMount(loadComments);
 </template>
 
 <style scoped>
-section {
+.comments-section {
   margin-top: 1em;
 }
 
 article {
-  background-color: var(--comment-bg);
+  background-color: #e8d3f7; /* Softer purple for comment backgrounds */
   border-radius: 4px;
-  padding: 0.5em; /* Reduced padding for a compact look */
-  margin-bottom: 0.5em; /* Reduced margin for closer spacing */
-}
-
-/* Post styling */
-.post-container {
-  background-color: #e8d3f7; /* Softer purple for post backgrounds */
-  padding: 1em;
-  margin: 0.5em 0;
-  border-radius: 8px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.08);
-  font-size: 0.95em;
-  color: #3d1a52;
+  padding: 0.5em; /* Padding for comments */
+  margin-bottom: 0.5em; /* Margin for spacing */
 }
 
 /* Comment styling */
@@ -57,7 +46,12 @@ article {
   margin: 0.3em 0; /* Reduced margin between comments */
   border-radius: 5px;
   font-size: 0.85em;
-  color: #3d1a52;
+  color: #3d1a52; /* Deep purple text color */
   text-align: left; /* Left-aligned comments */
+}
+
+/* Heading styling */
+h3 {
+  color: #4b2e67; /* Deep purple for heading */
 }
 </style>

@@ -93,7 +93,8 @@ function cancelDelete() {
 </script>
 <template>
   <div>
-    <h1 font="Georgia">View Your Events:</h1>
+    <h1 font="Georgia">Calendar</h1>
+    <h2 font="Georgia">Click on a Date to View Your Events:</h2>
     <div class="month">
       <ul>
         <li class="prev" @click="changeMonth(-1)">&#10094;</li>
@@ -139,7 +140,7 @@ function cancelDelete() {
       </ul>
       <p v-else>No events for this day.</p>
     </div>
-    <h2> Add a New Event to Your Schedule!</h2>
+    <h2 text-align> Add a New Event to Your Schedule!</h2>
     <CreateEventForm></CreateEventForm>
   </div>
 </template>
@@ -147,7 +148,11 @@ function cancelDelete() {
 * {box-sizing: border-box;}
 ul {list-style-type: none;}
 body {font-family: Verdana, sans-serif;}
-
+h1, h2, h3, h4 {
+  text-align: center;
+  color: #7a3b99; /* darker purple for headings */
+  font-weight: bold;
+}
 .month {
   padding: 70px 25px;
   width: 100%;
@@ -180,19 +185,19 @@ body {font-family: Verdana, sans-serif;}
 .weekdays {
   margin: 0;
   padding: 10px 0;
-  background-color: #ddd;
+  background-color: #fdf3e4;
 }
 
 .weekdays li {
   display: inline-block;
   width: 13.6%;
-  color: #666;
+  color:#2a0449;
   text-align: center;
 }
 
 .days {
   padding: 10px 0;
-  background: #eee;
+  background: #fbf7f0;
   margin: 0;
 }
 
@@ -203,7 +208,8 @@ body {font-family: Verdana, sans-serif;}
   text-align: center;
   margin-bottom: 5px;
   font-size:12px;
-  color: #777;
+  color: #2a0449;
+  cursor: pointer;
 }
 
 .days li .active {
@@ -212,8 +218,7 @@ body {font-family: Verdana, sans-serif;}
   color: white !important
 }
 
-/* Add media queries for smaller screens */
-@media screen and (max-width:720px) {
+@media screen and (max-width:720) {
   .weekdays li, .days li {width: 13.1%;}
 }
 

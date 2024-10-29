@@ -36,7 +36,7 @@ onMounted(loadUserGoals);
 
 <template>
   <main v-if="isLoggedIn">
-    <h1>{{ currentUsername }}'s Profile</h1>
+    <h1>{{ currentUsername }}'s goals page</h1>
 
     <section class="goals-section">
       <h2>My Goals</h2>
@@ -58,16 +58,28 @@ onMounted(loadUserGoals);
     </section>
 
     <CreateGoalForm @refreshPosts="loadUserGoals" />
+    <section class="goals-section">
+  <h2>Friends' Goals</h2>
+  <ul v-if="goals.length">
+    <li v-for="goal in goals" :key="goal._id" class="goal-item">
+      <p>Author: {{ goal.author }}</p>
+      <span><strong>{{ goal.content }}</strong></span>
+      <p>Status: {{ goal.options.completed ? "Completed" : "In Progress" }}</p>
+    </li>
+  </ul>
+  <p v-else>No goals set yet.</p>
+</section>
   </main>
 
   <section v-else>
     <h2>Please login to view your profile.</h2>
   </section>
+  
 </template>
 
 <style scoped>
 main {
-  background-color: #f3e6f7; /* Light purple background */
+  background-color: #f3e8ff; /* Light purple background */
   font-family: 'Arial', sans-serif;
   color: #4b2e67;
   padding: 2em;
@@ -82,7 +94,7 @@ main {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-  background-color: #ffffff;
+  background-color: #fdf3e4;
 }
 
 .goal-item {
