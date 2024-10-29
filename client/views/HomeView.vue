@@ -59,7 +59,7 @@ h1, h2 {
 
 /* General layout for sections */
 section {
-  background-color: #f3e8fd; /* Light lavender background */
+  background-color: #f3e8fd; 
   max-width: 800px;
   margin: 1em auto;
   padding: 1.5em;

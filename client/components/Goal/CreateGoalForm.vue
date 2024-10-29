@@ -3,12 +3,13 @@ import { ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
 
 const content = ref("");
+const completed = ref(false); // Define completed as a reactive ref
 const emit = defineEmits(["refreshGoals"]);
 
-const createGoals = async (content: string, completed=false) => {
+const createGoals = async (content: string, completed = false) => {
   try {
     await fetchy("/api/goals", "POST", {
-      body: { content: content,  options: {completed: completed}},
+      body: { content: content, options: { completed: completed } },
     });
   } catch (_) {
     return;
@@ -19,23 +20,23 @@ const createGoals = async (content: string, completed=false) => {
 
 const emptyForm = () => {
   content.value = "";
+  completed.value = false; // Reset completed checkbox
 };
 </script>
 
 <template>
   <form @submit.prevent="createGoals(content, completed)">
     <label for="content">Goal Content:</label>
-    <textarea id="content" v-model="content" placeholder="Create a goal today!" required> </textarea>
+    <textarea id="content" v-model="content" placeholder="Create a goal today!" required></textarea>
+
     <label>
-        <input
-          type="checkbox"
-          v-model="completed"
-        />
-        Completed
-      </label>
-      <button type="submit" class="pure-button-primary pure-button">Create A Goal Today</button>
+      <input type="checkbox" v-model="completed" /> Completed
+    </label>
+
+    <button type="submit" class="pure-button-primary pure-button">Create A Goal Today</button>
   </form>
 </template>
+
 
 <style scoped>
 form {

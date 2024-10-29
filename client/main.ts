@@ -3,7 +3,7 @@ import "purecss";
 
 import { createPinia } from "pinia";
 import piniaPluginPersistedState from "pinia-plugin-persistedstate";
-import VCalendar from "v-calendar";
+// import VCalendar from "v-calendar";
 import { createApp } from "vue";
 
 import App from "./App.vue";
@@ -15,8 +15,8 @@ pinia.use(piniaPluginPersistedState);
 
 app.use(pinia);
 app.use(router);
-app.use(VCalendar, {
-  componentPrefix: "vc", // Use <vc-calendar /> instead of <calendar />
-});
+// app.use(VCalendar, {
+//   componentPrefix: "vc", // Use <vc-calendar /> instead of <calendar />
+// });
 
 app.mount("#app");

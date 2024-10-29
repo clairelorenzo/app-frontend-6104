@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
 
@@ -7,8 +7,8 @@ const emit = defineEmits(["editEvent", "refreshEvents", "cancelEdit"]);
 
 // Ref to hold the edited values
 const name = ref("");
-const startTime = ref("")
-const endTime = ref("") // Format to YYYY-MM-DDTHH:MM
+const startTime = ref("");
+const endTime = ref(""); // Format to YYYY-MM-DDTHH:MM
 
 // Function to edit the event
 const editEvent = async () => {
@@ -16,7 +16,7 @@ const editEvent = async () => {
     await fetchy(`/api/events/${props.event_id}`, "PATCH", {
       body: { name: name.value, startTime: startTime.value, endTime: endTime.value },
     });
-    emit("editEvent");
+    emit("editEvent"); // Notify parent that edit is complete
     emit("refreshEvents");
   } catch (error) {
     console.error("Failed to edit event:", error);
@@ -40,8 +40,7 @@ const editEvent = async () => {
       <button class="btn-small pure-button-primary pure-button" type="submit">Save</button>
       <button type="button" @click="emit('cancelEdit')">Cancel</button>
     </div>
-    </form>
-    
+  </form>
 </template>
 
 <style scoped>
@@ -72,4 +71,4 @@ input {
   font-size: 0.9em;
   font-style: italic;
 }
-</style>
+</style> -->

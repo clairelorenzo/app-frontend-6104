@@ -4,34 +4,34 @@ import { fetchy } from "@/utils/fetchy";
 import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
 import CreateGoalForm from "../components/Goal/CreateGoalForm.vue";
+
 const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
-const posts = ref<Array<Record<string, any>>>([]);
 const goals = ref<Array<Record<string, any>>>([]);
 const otherGoals = ref<Array<Record<string, any>>>([]);
 
-// Load user's posts and goals on component mount
+// Load user's goals on component mount
 async function loadUserGoals() {
   try {
-    // Fetch goals
     const goalsResponse = await fetchy(`/api/goals`, "GET", { query: { author: currentUsername.value } });
     goals.value = goalsResponse;
   } catch (error) {
     console.error("Failed to load goals:", error);
   }
 }
-async function loadOtherUserGoals() {
 
+// Update goal status
+async function toggleGoalStatus(goalId: string, newStatus: boolean) {
   try {
-    // Fetch goals
-    const goalsResponse = await fetchy(`/api/goals`, "GET", {query: { excludeAuthor: currentUsername.value }});
-    otherGoals.value = goalsResponse || [];
+    await fetchy(`/api/goals/${goalId}`, "PATCH", {
+      body: { options: { completed: newStatus } },
+    });
+    loadUserGoals(); // Refresh the goals list after updating
   } catch (error) {
-    console.error("Failed to load goals:", error);
+    console.error("Failed to update goal status:", error);
   }
 }
 
 onMounted(loadUserGoals);
-onMounted(loadOtherUserGoals);
 </script>
 
 <template>
@@ -42,27 +42,22 @@ onMounted(loadOtherUserGoals);
       <h2>My Goals</h2>
       <ul v-if="goals.length">
         <li v-for="goal in goals" :key="goal._id" class="goal-item">
-          <p>Author:{{ goal.author}}</p>
-          <p><strong>{{ goal.content }}</strong></p>
+          <label>
+            <input 
+              type="checkbox" 
+              :checked="goal.options.completed" 
+              @change="toggleGoalStatus(goal._id, !goal.options.completed)"
+            />
+            
+          </label>
+          <span><strong>{{ goal.content }}</strong></span>
           <p>Status: {{ goal.options.completed ? "Completed" : "In Progress" }}</p>
-    
         </li>
       </ul>
       <p v-else>No goals set yet.</p>
     </section>
+
     <CreateGoalForm @refreshPosts="loadUserGoals" />
-    <section class="goals-section">
-      <h2>Friends' Goals</h2>
-      <ul v-if="otherGoals.length">
-        <li v-for="goal in otherGoals" :key="goal._id" class="goal-item">
-          <ul v-if="goal.author != currentUsername">
-            <p><strong>{{ goal.content }}</strong></p>
-            <p>Status: {{ goal.options.completed ? "Completed" : "In Progress" }}</p>
-        </ul>
-        </li>
-      </ul>
-      <p v-else>You're up to date on your friends' goals!</p>
-    </section>
   </main>
 
   <section v-else>
@@ -71,7 +66,11 @@ onMounted(loadOtherUserGoals);
 </template>
 
 <style scoped>
-h1, h2 {
+main {
+  background-color: #f3e6f7; /* Light purple background */
+  font-family: 'Arial', sans-serif;
+  color: #4b2e67;
+  padding: 2em;
   text-align: center;
 }
 
@@ -83,25 +82,38 @@ h1, h2 {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  background-color: #ffffff;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.post-item, .goal-item {
+.goal-item {
+  display: flex;
+  align-items: center;
+  gap: 1em;
   padding: 0.5em 0;
   border-bottom: 1px solid #eee;
 }
 
-.post-item:last-child, .goal-item:last-child {
-  border-bottom: none;
+input[type="checkbox"] {
+  transform: scale(1.2);
+  accent-color: #7a3b99; /* Purple checkbox color */
 }
 
-.post-timestamp {
-  font-size: 0.8em;
-  color: #666;
+h1, h2 {
+  color: #4b2e67;
 }
 
+button {
+  font-size: 1em;
+  padding: 0.75em 1em;
+  color: white;
+  background: #7a3b99;
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #d1a5e7;
+}
 </style>

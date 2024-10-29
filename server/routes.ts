@@ -255,6 +255,13 @@ class Routes {
     await GoalSetting.assertAuthorIsUser(goalId, user);
     return await GoalSetting.delete(goalId);
   }
+  @Router.patch("/goals/:id")
+  async updateGoal(session: SessionDoc, id: string, options?: GoalOptions) {
+    const user = Sessioning.getUser(session);
+    const oid = new ObjectId(id);
+    await GoalSetting.assertAuthorIsUser(oid, user);
+    return await GoalSetting.update(oid, options);
+  }
 }
 /** The web app. */
 export const app = new Routes();

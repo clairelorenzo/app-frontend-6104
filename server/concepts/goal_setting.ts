@@ -40,10 +40,10 @@ export default class GoalSettingConcept {
     return await this.goals.readMany({ author });
   }
 
-  async update(_id: ObjectId, content?: string, options?: GoalOptions) {
+  async update(_id: ObjectId, options?: GoalOptions) {
     // Note that if content or options is undefined, those fields will *not* be updated
     // since undefined values for partialUpdateOne are ignored.
-    await this.goals.partialUpdateOne({ _id }, { content, options });
+    await this.goals.partialUpdateOne({ _id }, { options: options });
     return { msg: "Post successfully updated!" };
   }
 
