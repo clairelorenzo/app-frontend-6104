@@ -62,9 +62,11 @@ onMounted(loadUserGoals);
   <h2>Friends' Goals</h2>
   <ul v-if="goals.length">
     <li v-for="goal in goals" :key="goal._id" class="goal-item">
-      <p>Author: {{ goal.author }}</p>
-      <span><strong>{{ goal.content }}</strong></span>
-      <p>Status: {{ goal.options.completed ? "Completed" : "In Progress" }}</p>
+      <ul v-if="goal.author != currentUsername">
+        <p>Author: {{ goal.author }}</p>
+        <span><strong>{{ goal.content }}</strong></span>
+        <p>Status: {{ goal.options.completed ? "Completed" : "In Progress" }}</p>
+      </ul>
     </li>
   </ul>
   <p v-else>No goals set yet.</p>
