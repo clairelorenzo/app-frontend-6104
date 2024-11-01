@@ -18,7 +18,14 @@ async function loadUserGoals() {
     console.error("Failed to load goals:", error);
   }
 }
-
+async function loadAllUserGoals() {
+  try {
+    const goalsResponse = await fetchy(`/api/goals`, "GET");
+    otherGoals.value = goalsResponse;
+  } catch (error) {
+    console.error("Failed to load goals:", error);
+  }
+}
 // Update goal status
 async function toggleGoalStatus(goalId: string, newStatus: boolean) {
   try {
@@ -60,8 +67,8 @@ onMounted(loadUserGoals);
     <CreateGoalForm @refreshPosts="loadUserGoals" />
     <section class="goals-section">
   <h2>Friends' Goals</h2>
-  <ul v-if="goals.length">
-    <li v-for="goal in goals" :key="goal._id" class="goal-item">
+  <ul v-if="otherGoals.length">
+    <li v-for="goal in otherGoals" :key="goal._id" class="goal-item">
       <ul v-if="goal.author != currentUsername">
         <p>Author: {{ goal.author }}</p>
         <span><strong>{{ goal.content }}</strong></span>
